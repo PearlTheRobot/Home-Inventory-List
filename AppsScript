@@ -1,0 +1,96 @@
+function createFullInventoryAndShoppingList() {
+  var ss = SpreadsheetApp.create("Home Inventory and Shopping List");
+  var inventorySheet = ss.getActiveSheet();
+  inventorySheet.setName("Inventory");
+
+  // Define headers for the inventory sheet
+  var inventoryHeaders = ["Item", "Category", "Location", "Have it (Y/N)", "Quantity", "Estimated Cost ($)", "Expiration Date", "Finished", "Amazon Link", "Walmart Link", "Aldi Link"];
+  inventorySheet.getRange("A1:K1").setValues([inventoryHeaders]);
+
+  // Add your data to the inventory sheet (replace with the actual links)
+ var data = [
+    // Grains
+    ["White Rice", "Grains", "Pantry", "", "1 lb", "2.50", "", "", "Amazon_Link", "Walmart_Link", "Aldi_Link"],
+    ["Brown Rice", "Grains", "Pantry", "", "1 lb", "2.80", "", "", "Amazon_Link", "Walmart_Link", "Aldi_Link"],
+    ["Basmati Rice", "Grains", "Pantry", "", "1 lb", "3.00", "", "", "Amazon_Link", "Walmart_Link", "Aldi_Link"],
+    ["Quinoa", "Grains", "Pantry", "", "1 lb", "4.00", "", "", "Amazon_Link", "Walmart_Link", "Aldi_Link"],
+
+    // Legumes
+    ["Black Beans", "Legumes", "Pantry", "", "15 oz can", "1.00", "", "", "Amazon_Link", "Walmart_Link", "Aldi_Link"],
+    ["Chickpeas", "Legumes", "Pantry", "", "15 oz can", "1.00", "", "", "Amazon_Link", "Walmart_Link", "Aldi_Link"],
+    ["Lentils", "Legumes", "Pantry", "", "1 lb", "1.50", "", "", "Amazon_Link", "Walmart_Link", "Aldi_Link"],
+    ["Pinto Beans", "Legumes", "Pantry", "", "15 oz can", "1.00", "", "", "Amazon_Link", "Walmart_Link", "Aldi_Link"],
+
+    // Baking Essentials
+    ["All-Purpose Flour", "Baking Essentials", "Pantry", "", "5 lb", "3.00", "", "", "Amazon_Link", "Walmart_Link", "Aldi_Link"],
+    ["Granulated Sugar", "Baking Essentials", "Pantry", "", "5 lb", "2.50", "", "", "Amazon_Link", "Walmart_Link", "Aldi_Link"],
+    ["Brown Sugar", "Baking Essentials", "Pantry", "", "2 lb", "2.00", "", "", "Amazon_Link", "Walmart_Link", "Aldi_Link"],
+    ["Baking Powder", "Baking Essentials", "Pantry", "", "8 oz", "1.50", "", "", "Amazon_Link", "Walmart_Link", "Aldi_Link"],
+
+    // Oils & Vinegars
+    ["Olive Oil", "Oils & Vinegars", "Pantry", "", "17 oz", "6.00", "", "", "Amazon_Link", "Walmart_Link", "Aldi_Link"],
+    ["Vegetable Oil", "Oils & Vinegars", "Pantry", "", "32 oz", "2.50", "", "", "Amazon_Link", "Walmart_Link", "Aldi_Link"],
+    ["Apple Cider Vinegar", "Oils & Vinegars", "Pantry", "", "16 oz", "3.00", "", "", "Amazon_Link", "Walmart_Link", "Aldi_Link"],
+    ["Balsamic Vinegar", "Oils & Vinegars", "Pantry", "", "16 oz", "5.00", "", "", "Amazon_Link", "Walmart_Link", "Aldi_Link"],
+
+    // Spices & Herbs
+    ["Salt", "Spices & Herbs", "Pantry", "", "26 oz", "0.50", "", "", "Amazon_Link", "Walmart_Link", "Aldi_Link"],
+    ["Black Pepper", "Spices & Herbs", "Pantry", "", "4 oz", "3.00", "", "", "Amazon_Link", "Walmart_Link", "Aldi_Link"],
+    ["Garlic Powder", "Spices & Herbs", "Pantry", "", "3 oz", "2.00", "", "", "Amazon_Link", "Walmart_Link", "Aldi_Link"],
+    ["Cumin", "Spices & Herbs", "Pantry", "", "3 oz", "2.50", "", "", "Amazon_Link", "Walmart_Link", "Aldi_Link"],
+
+    // Snacks & Sweets
+    ["Potato Chips", "Snacks & Sweets", "Pantry", "", "8 oz bag", "3.00", "", "", "Amazon_Link", "Walmart_Link", "Aldi_Link"],
+    ["Dark Chocolate", "Snacks & Sweets", "Pantry", "", "3.5 oz bar", "2.50", "", "", "Amazon_Link", "Walmart_Link", "Aldi_Link"],
+    ["Pretzels", "Snacks & Sweets", "Pantry", "", "16 oz bag", "3.00", "", "", "Amazon_Link", "Walmart_Link", "Aldi_Link"],
+    ["Popcorn", "Snacks & Sweets", "Pantry", "", "16 oz", "2.00", "", "", "Amazon_Link", "Walmart_Link", "Aldi_Link"],
+
+    // Freezer Items
+    ["Frozen Peas", "Frozen Foods", "Freezer", "", "1 lb", "2.00", "", "", "Amazon_Link", "Walmart_Link", "Aldi_Link"],
+    ["Frozen Corn", "Frozen Foods", "Freezer", "", "1 lb", "2.00", "", "", "Amazon_Link", "Walmart_Link", "Aldi_Link"],
+    ["Frozen Mixed Vegetables", "Frozen Foods", "Freezer", "", "1 lb", "2.00", "", "", "Amazon_Link", "Walmart_Link", "Aldi_Link"],
+    ["Ice Cream", "Frozen Foods", "Freezer", "", "1 pint", "4.00", "", "", "Amazon_Link", "Walmart_Link", "Aldi_Link"],
+
+    // Refrigerator Items
+    ["Milk", "Dairy", "Refrigerator", "", "1 gallon", "3.50", "", "", "Amazon_Link", "Walmart_Link", "Aldi_Link"],
+    ["Eggs", "Dairy", "Refrigerator", "", "1 dozen", "2.50", "", "", "Amazon_Link", "Walmart_Link", "Aldi_Link"],
+    ["Butter", "Dairy", "Refrigerator", "", "1 lb", "3.00", "", "", "Amazon_Link", "Walmart_Link", "Aldi_Link"],
+    ["Cheddar Cheese", "Dairy", "Refrigerator", "", "8 oz", "3.00", "", "", "Amazon_Link", "Walmart_Link", "Aldi_Link"],
+
+    // Cleaning Supplies
+    ["Laundry Detergent", "Cleaning Supplies", "Laundry Room", "", "50 oz", "10.00", "", "", "Amazon_Link", "Walmart_Link", "Aldi_Link"],
+       ["Dish Soap", "Cleaning Supplies", "Kitchen", "", "16 oz", "3.00", "", "", "Amazon_Link", "Walmart_Link", "Aldi_Link"],
+    ["All-Purpose Cleaner", "Cleaning Supplies", "Kitchen", "", "32 oz", "4.00", "", "", "Amazon_Link", "Walmart_Link", "Aldi_Link"],
+    ["Paper Towels", "Cleaning Supplies", "Kitchen", "", "2 rolls", "3.00", "", "", "Amazon_Link", "Walmart_Link", "Aldi_Link"],
+
+    // Paper Goods
+    ["Toilet Paper", "Paper Goods", "Bathroom", "", "6 rolls", "5.00", "", "", "Amazon_Link", "Walmart_Link", "Aldi_Link"],
+    ["Facial Tissues", "Paper Goods", "Various", "", "1 box", "2.00", "", "", "Amazon_Link", "Walmart_Link", "Aldi_Link"],
+    ["Napkins", "Paper Goods", "Dining", "", "50 count", "3.00", "", "", "Amazon_Link", "Walmart_Link", "Aldi_Link"],
+    ["Paper Plates", "Paper Goods", "Dining", "", "30 count", "4.00", "", "", "Amazon_Link", "Walmart_Link", "Aldi_Link"],
+
+    // Pet Supplies
+    ["Dry Dog Food", "Pet Supplies", "Pantry", "", "10 lb", "20.00", "", "", "Amazon_Link", "Walmart_Link", "Aldi_Link"],
+    ["Cat Litter", "Pet Supplies", "Utility Area", "", "20 lb", "15.00", "", "", "Amazon_Link", "Walmart_Link", "Aldi_Link"],
+    ["Pet Treats", "Pet Supplies", "Pantry", "", "8 oz", "8.00", "", "", "Amazon_Link", "Walmart_Link", "Aldi_Link"],
+    ["Chew Toys", "Pet Supplies", "Living Area", "", "1 item", "5.00", "", "", "Amazon_Link", "Walmart_Link", "Aldi_Link"],
+  ];
+
+  // Set the data starting from the second row (row 2)
+  inventorySheet.getRange(2, 1, data.length, data[0].length).setValues(data);
+
+  // Define headers for the shopping list sheet
+  var shoppingListSheet = ss.insertSheet("Shopping List");
+  var shoppingListHeaders = ["Item", "Category", "Quantity", "Purchase Status"];
+  shoppingListSheet.getRange("A1:D1").setValues([shoppingListHeaders]);
+
+  // Data validation for 'Purchase Status' in the shopping list sheet
+  var statusOptions = ["Purchased", "Need to Buy"];
+  var statusValidation = SpreadsheetApp.newDataValidation().requireValueInList(statusOptions, true).build();
+  shoppingListSheet.getRange("D2:D1000").setDataValidation(statusValidation);
+
+  // Note: Manual intervention required for adding product links and managing inventory and shopping list
+}
+
+// Run the function to create the sheets
+createFullInventoryAndShoppingList();
